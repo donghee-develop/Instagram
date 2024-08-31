@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.instagram.mapper.ChatMapper">
+    <resultMap id="selectChatRoomMap" type="ChatRoomDTO" autoMapping="true">
+        <id property="id" column="room_id" />
+        <collection property="messages" ofType="ChatMessageDTO" javaType="list" autoMapping="true">
+            <id property="no" column="no" />
+            <association property="sender" javaType="UserDTO" resultMap="com.instagram.mapper.UserMapper.getUserWithImageMap" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="selectChatRoomsWithLastMessageAndOtherUserMap" type="ChatRoomDTO">
+        <id property="id" column="room_id"/>
+        <association property="otherUser" javaType="UserDTO" resultMap="com.instagram.mapper.UserMapper.getUserWithImageMap" />
+        <collection property="messages" ofType="ChatMessageDTO" javaType="list">
+            <id property="no" column="no"/>
+            <result property="message" column="message" />
+            <result property="sendTime" column="send_time" />
+        </collection>
+    </resultMap>
+
+
+
+    <select id="selectChatRoomByRoomId" resultType="ChatRoomDTO" resultMap="selectChatRoomMap">
+        SELECT
+            C_MESSAGE.*,
+            USER.*
+        FROM chat_room C_ROOM
+                 LEFT OUTER JOIN chat_message C_MESSAGE
+                                 ON C_ROOM.id = C_MESSAGE.room_id
+                 LEFT OUTER JOIN `user` `USER`
+                                 ON `USER`.email = C_MESSAGE.send_user
+        WHERE room_id = #{roomId}
+        ORDER BY `C_MESSAGE`.`no`;
+    </select>
+
+
+    <select id="selectChatRoomsByUserEmail" resultType="ChatRoomDTO" resultMap="selectChatRoomsWithLastMessageAndOtherUserMap">
+        SELECT
+            *
+        FROM `chat_message` C_MESSAGE
+                 INNER JOIN `user` `USER`
+                            ON `USER`.email IN (
+                                SELECT user_email FROM `chat_user` WHERE room_id = C_MESSAGE.`room_id` AND user_email != #{userEmail}
+                            )
+        WHERE C_MESSAGE.`no` IN
+              (
+                  SELECT MAX(`no`) FROM `chat_message`
+                  WHERE room_id IN
+                        (
+                            # 내가 참여중인 모든 방
+                            SELECT DISTINCT `room_id` FROM `chat_user`
+                            WHERE `user_email` = #{userEmail}
+                        )
+                  GROUP BY `room_id`
+              )
+    </select>
+
+    <select id="selectChatRoomByUserEmails" resultType="ChatRoomDTO">
+        SELECT room_id AS 'id' FROM chat_user
+        WHERE room_id IN
+              (
+                  SELECT room_id FROM chat_user WHERE user_email = #{meEmail}
+              ) AND user_email = #{otherEmail}
+    </select>
+
+
+    <insert id="insertChatMessageOfRoomId">
+        INSERT INTO `chat_message` (no, send_user, room_id, message, send_time)
+        VALUES (NULL, #{chatMessage.sender.email}, #{roomId}, #{chatMessage.message}, DEFAULT);
+    </insert>
+    <insert id="insertRoom">
+        insert into chat_room values (#{id}, DEFAULT);
+    </insert>
+    <insert id="insertRoomUsers">
+        insert into chat_user values
+        (#{chatRoom.id}, #{meEmail}),
+        (#{chatRoom.id}, #{chatRoom.otherUser.email});
+    </insert>
+</mapper>
+
+
+
+
+

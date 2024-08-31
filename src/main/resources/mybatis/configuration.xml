@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="defaultFetchSize" value="100"/>
+        <setting name="defaultStatementTimeout" value="5"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.instagram.dto.UserDTO" alias="UserDTO" />
+        <typeAlias type="com.instagram.dto.PostDTO" alias="PostDTO" />
+        <typeAlias type="com.instagram.dto.FileDTO" alias="FileDTO" />
+        <typeAlias type="com.instagram.dto.ChatRoomDTO" alias="ChatRoomDTO" />
+        <typeAlias type="com.instagram.dto.ChatMessageDTO" alias="ChatMessageDTO" />
+    </typeAliases>
+
+</configuration>

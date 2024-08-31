@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main-layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}">
+    <title>KOREA INSTAGRAM | MYPAGE</title>
+    <link rel="stylesheet" href="../../static/css/user/mypage.css">
+    <script src="../../static/js/user/mypage.js" defer></script>
+</head>
+<body>
+<main layout:fragment="main" id="main">
+    <header>
+        <section th:id="${user.email}" class="user-info-container">
+            <div>
+                <button type="button" class="user-profile-img-container">
+                    <img th:src="@{|/image/${user.email}|}" src="../../images/profile.jpg" height="150" width="150"/>
+                </button>
+            </div>
+
+            <div>
+                <section class="user-name-section" th:with="me=${#authentication.principal}">
+                    <span th:text="${user.nickname}">aniplex_jp</span>
+                    <button th:if="${me.email == user.email}" id="profile-edit-btn" type="button">프로필 편집</button>
+                    <th:block th:if="${me.email != user.email}">
+
+                        <button th:if="${me.followings.contains(user.email)}"
+                                th:onclick="@{|unFollow_user('${user.email}')|}"
+                                id="follow-btn" type="button">팔로우 취소</button>
+
+                        <button th:if="${!me.followings.contains(user.email)}"
+                                th:onclick="@{|follow_user('${user.email}')|}"
+                                id="follow-btn" type="button">팔로우</button>
+                    </th:block>
+                </section>
+
+                <section class="user-info-section">
+                    <div class="info">
+                        <span>게시물</span>
+                        <b>21</b>
+                    </div>
+                    <button type="button" class="info">
+                        <span>팔로워</span>
+                        <b th:text="${user.followers.size()}">21</b>
+                    </button>
+                    <button type="button" class="info">
+                        <span>팔로우</span>
+                        <b th:text="${user.followings.size()}">21</b>
+                    </button>
+                </section>
+
+                <section class="user-desc-section" th:text="${user.introduce}">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aliquam, aliquid atque beatae deserunt explicabo, fugiat molestiae necessitatibus nemo odio praesentium provident quas quidem quisquam rem tenetur, velit veritatis!
+                </section>
+            </div>
+
+        </section>
+
+        <section class="user-shorts-container">
+            <ul>
+                <li>
+                    <button type="button">
+                        <img src="../../images/profile.jpg" height="150" width="150"/>
+                    </button>
+                    <span>신규</span>
+                </li>
+                <li>
+                    <button type="button">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                    <span>새로 만들기</span>
+                </li>
+            </ul>
+        </section>
+    </header>
+
+    <nav>
+        <ul>
+            <li>
+                <button type="button">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                    <span>게시물</span>
+                </button>
+            </li>
+            <li>
+                <button type="button">
+                    <i class="bi bi-bookmark"></i>
+                    <span>저장됨</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="post-container">
+        <ol>
+            <!--                <li>-->
+            <!--                    <button>-->
+            <!--                        <img src="../../images/post/p1.jpg" height="630" width="1200"/>-->
+            <!--                    </button>-->
+            <!--                    <div>-->
+            <!--                        <div>-->
+            <!--                            <i class="bi bi-heart-fill"></i>-->
+            <!--                            <span>9</span>-->
+            <!--                        </div>-->
+            <!--                        <div>-->
+            <!--                            <i class="bi bi-chat-fill"></i>-->
+            <!--                            <span>11</span>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </li>-->
+        </ol>
+    </section>
+
+
+</main>
+</body>
+</html>

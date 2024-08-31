@@ -1,0 +1,137 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+*{
+    --color-Teal-and-Mint-1 : rgba(199, 255, 237, 1);
+    --color-Teal-and-Mint-2 : rgba(216, 255, 219, 1);
+    --color-Teal-and-Mint-3 : rgba(0, 143, 140, 1);
+    --color-Teal-and-Mint-4 : rgba(1, 89, 88, 1);
+    --color-Teal-and-Mint-5 : rgba(2, 53, 53, 1);
+
+    /* Color Theme Swatches in RGBA */
+    --color-RockON-1 : rgba(1, 2, 33, 1);
+    --color-RockON-2 : rgba(10, 114, 114, 1);
+    --color-RockON-3 : rgba(182, 191, 153, 1);
+    --color-RockON-4 : rgba(237, 169, 36, 1);
+    --color-RockON-5 : rgba(196, 50, 1, 1);
+
+    /* Color Theme Swatches in RGBA */
+    --color-Big-Machine-1: rgba(188, 41, 46, 0.4);
+    --color-Big-Machine-2: rgba(58, 56, 54, 1);
+    --color-Big-Machine-3: rgba(177, 189, 191, 1);
+    --color-Big-Machine-4: rgba(136, 155, 155, 1);
+    --color-Big-Machine-5: rgba(71, 104, 101, 1);
+
+    /* Color Theme Swatches in RGBA */
+    --color-Light-Grays-1-rgba : rgba(212, 214, 219, 1);
+    --color-Light-Grays-2-rgba : rgba(235, 237, 240, 1);
+    --color-Light-Grays-3-rgba : rgba(246, 246, 249, 1);
+    --color-Light-Grays-4-rgba : rgba(255, 255, 255, 1);
+    --color-Light-Grays-5-rgba : rgba(255, 255, 255, 1);
+
+    /* Color Theme Swatches in RGBA */
+    --Greys-1-rgba : rgba(237, 238, 242, 1);
+    --Greys-2-rgba : rgba(222, 227, 242, 1);
+    --Greys-3-rgba : rgba(183, 194, 229, 1);
+    --Greys-4-rgba : rgba(102, 107, 127, 1);
+    --Greys-5-rgba : rgba(61, 64, 76, 1);
+
+
+    --font-size-thin: 14px;
+    --font-size-extralight: 15px;
+    --font-size-light: 16px;
+    --font-size-regular: 18px;
+    --font-size-medium: 20px;
+    --font-size-semibold: 22px;
+    --font-size-bold: 24px;
+    --font-size-extrabold: 26px;
+    --font-size-black: 28px;
+}
+@font-face {
+    font-family: 'Black';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-Black.subset.woff2') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-size: var(--font-size-black);
+}
+@font-face {
+    font-family: 'ExtraBold';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-ExtraBold.subset.woff2') format('woff');
+    font-weight: 800;
+    font-style: normal;
+    font-size: var(--font-size-extrabold);
+}
+@font-face {
+    font-family: 'Bold';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-Bold.subset.woff2') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-size: var(--font-size-bold);
+}
+@font-face {
+    font-family: 'SemiBold';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-SemiBold.subset.woff2') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-size: var(--font-size-semibold);
+}
+@font-face {
+    font-family: 'Medium';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-Medium.subset.woff2') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-size: var(--font-size-medium);
+}
+@font-face {
+    font-family: 'Regular';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-Regular.subset.woff2') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-size: var(--font-size-regular);
+}
+@font-face {
+    font-family: 'Light';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-Light.subset.woff2') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-size: var(--font-size-light);
+}
+@font-face {
+    font-family: 'ExtraLight';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-ExtraLight.subset.woff2') format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-size: var(--font-size-extralight);
+}
+@font-face {
+    font-family: 'Thin';
+    src: url('../../Pretendard/web/static/woff2-subset/Pretendard-Thin.subset.woff2') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-size: var(--font-size-thin);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Regular;
+    font-size: var(--font-size-regular);
+    --media-base-size: 900px;
+    --main-color: white;
+    --bg-color: black;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+    }
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+li{
+    list-style: none;
+}

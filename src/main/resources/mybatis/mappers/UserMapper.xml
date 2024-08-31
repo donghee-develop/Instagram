@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.instagram.mapper.UserMapper">
+    <resultMap id="getUserWithImageMap" type="UserDTO" autoMapping="true">
+        <id property="email" column="email" />
+        <association property="image" javaType="FileDTO">
+            <id property="data" column="image" />
+        </association>
+    </resultMap>
+
+    <resultMap id="getUserWithImageAndFollowMap" type="UserDTO" autoMapping="true">
+        <id property="email" column="email" />
+        <association property="image" javaType="FileDTO">
+            <id property="data" column="image" />
+        </association>
+        <collection property="followings" ofType="string" javaType="java.util.Set">
+            <id property="value" column="follow_user" />
+        </collection>
+        <collection property="followers" ofType="string" javaType="java.util.Set">
+            <id property="value" column="follower_user" />
+        </collection>
+    </resultMap>
+
+
+
+    <select id="getUserByUserInfo" resultType="UserDTO" resultMap="getUserWithImageAndFollowMap">
+        SELECT
+        `USER`.*,
+        USER_FOLLOWING.follow_user_email AS follow_user,
+        USER_FOLLOWER.user_email AS follower_user
+        FROM `user` `USER`
+        LEFT OUTER JOIN `user_following` USER_FOLLOWING
+        ON `USER`.email = USER_FOLLOWING.`user_email`
+        LEFT OUTER JOIN `user_following` USER_FOLLOWER
+        ON `USER`.email = USER_FOLLOWER.`follow_user_email`
+        <where>
+            <if test="email != null">
+                email = #{email}
+            </if>
+            <if test="nickname != null">
+                AND nickname = #{nickname}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertUser">
+        INSERT INTO `user` (email, password, name, nickname, image, introduce)
+        VALUES (#{email}, #{password}, #{name}, #{nickname}, #{image}, #{introduce})
+    </insert>
+
+
+
+    <select id="selectUserByKeyword" resultType="UserDTO" resultMap="getUserWithImageMap">
+        SELECT
+        *
+        FROM `user` `USER`
+        <choose>
+            <when test="keyword != null and keyword != ''">
+                WHERE (email LIKE CONCAT('%', #{keyword}, '%')
+                OR nickname LIKE CONCAT('%', #{keyword}, '%'))
+                AND email != #{userEmail}
+            </when>
+            <otherwise>
+                INNER JOIN `user_search` SEARCH
+                ON `USER`.email = SEARCH.search_user_email
+                WHERE user_email = #{userEmail}
+                ORDER BY `search_time` DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insertOrUpdateFindUser">
+        INSERT INTO `user_search` (user_email, search_user_email)
+        VALUES (#{meEmail}, #{otherEmail})
+        ON DUPLICATE KEY UPDATE `search_time` = NOW()
+    </insert>
+
+    <delete id="deleteFindUser">
+        DELETE FROM user_search
+        WHERE user_email = #{meEmail}
+        <if test="otherEmail != null and otherEmail != ''">
+            AND search_user_email = #{otherEmail}
+        </if>
+    </delete>
+
+    <!--    =================================== -->
+    <insert id="insertFollowUser">
+        INSERT INTO `user_following` (user_email, follow_user_email)
+        VALUES (#{meEmail}, #{otherEmail})
+    </insert>
+
+    <delete id="deleteFollowUser">
+        DELETE FROM `user_following`
+        WHERE user_email = #{meEmail} AND follow_user_email = #{otherEmail}
+    </delete>
+
+
+</mapper>
+
+
+
+
+

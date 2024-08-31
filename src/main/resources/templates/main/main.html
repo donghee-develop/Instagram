@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main-layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>INSTAR</title>
+
+    <link rel="stylesheet" href="../../static/css/public/public.css">
+    <link rel="stylesheet" href="../../static/css/public/aside.css">
+    <link rel="stylesheet" href="../../static/css/main/main.css">
+
+    <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
+    <script src="../../static/js/main/public-carousel.js" defer></script>
+    <script src="../../static/js/main/main.js" defer></script>
+    <script src="../../static/js/main/post-like.js" defer></script>
+</head>
+<body>
+<main layout:fragment="main" id="main">
+    <header id="main-header">
+        <ul>
+            <li>
+                <a href="#" type="button" class="user-shorts-btn">
+                        <span class="user-profile-img-container">
+                            <span>
+                                <img src="https://i.namu.wiki/i/l0x04r27DjSQmS-WgYk6I5x6IkKMyvZjRMyK5dI3EMoMikzCd2Kfl2SMRdvL3-y4zpxI_qLP-fs3QToSR7AU3g.webp" alt="#">
+                            </span>
+                        </span>
+                    <span class="user-profile-nickname">aniplex_jp</span>
+                </a>
+            </li>
+
+            <li>
+                <button class="user-shorts-btn">
+                        <span class="user-profile-img-container">
+                            <span>
+                                <img src="https://i.namu.wiki/i/bTca2nNtVRjrLf08CrKv8fvVluVKWOjv-V3xyFEtvkKDs_yEP0h5nnjr_OYDax80NhKM8kriNO73DU6YDgRHMA.webp" alt="#">
+                            </span>
+                        </span>
+                    <span class="user-profile-nickname">aniplex_jp</span>
+                </button>
+            </li>
+
+            <li>
+                <button class="user-shorts-btn">
+                        <span class="user-profile-img-container">
+                            <span>
+                                <img src="https://www.spcmagazine.com/wp-content/uploads/2022/04/%EC%9D%B4%EB%AF%B8%EC%A7%80-SPC-%EB%B0%B0%EC%8A%A4%ED%82%A8%EB%9D%BC%EB%B9%88%EC%8A%A4-5%EC%9B%94-%E2%80%98%ED%94%BC%EC%B9%B4%ED%94%BC%EC%B9%B4-%ED%94%BC%EC%B9%B4%EC%B8%84%E2%80%99-%E2%80%98%EB%82%98%EC%99%80%EB%9D%BC-%EA%BC%AC%EB%B6%80%EA%B8%B0%E2%80%99-%EC%B6%9C%EC%8B%9C.jpg" alt="#">
+                            </span>
+                        </span>
+                    <span class="user-profile-nickname">aniplex_jp</span>
+                </button>
+            </li>
+        </ul>
+    </header>
+
+    <section id="main-section">
+        <!--            <article>-->
+        <!--                <header>-->
+        <!--                    <a href="#" class="user-profile-img-container">-->
+        <!--                        <img src="https://i.namu.wiki/i/l0x04r27DjSQmS-WgYk6I5x6IkKMyvZjRMyK5dI3EMoMikzCd2Kfl2SMRdvL3-y4zpxI_qLP-fs3QToSR7AU3g.webp" alt="#">-->
+        <!--                    </a>-->
+        <!--                    <span class="user-profile-nickname">aniplex_jp</span>-->
+        <!--                    <span class="write-time">2주</span>-->
+        <!--                    <button type="button" class="more-menu">-->
+        <!--                        <i class="bi bi-three-dots"></i>-->
+        <!--                    </button>-->
+        <!--                </header>-->
+
+        <!--                <section class="embla">-->
+        <!--                    <div class="embla__viewport">-->
+        <!--                        <div class="embla__container">-->
+        <!--                            <div class="embla__slide">-->
+        <!--                                <div class="embla__slide__number" style="background-image: url('../../static/images/1.jpg')"></div>-->
+        <!--                            </div>-->
+        <!--                            <div class="embla__slide">-->
+        <!--                                <div class="embla__slide__number" style="background-image: url('../../static/images/2.jpg')">-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                            <div class="embla__slide">-->
+        <!--                                <div class="embla__slide__number" style="background-image: url('../../static/images/3.jpg')">-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+
+        <!--                    <div class="embla__controls">-->
+        <!--                        <div class="embla__buttons">-->
+        <!--                            <button class="embla__button embla__button&#45;&#45;prev" type="button">-->
+        <!--                                <svg class="embla__button__svg" viewBox="0 0 532 532">-->
+        <!--                                    <path fill="currentColor" d="M355.66 11.354c13.793-13.805 36.208-13.805 50.001 0 13.785 13.804 13.785 36.238 0 50.034L201.22 266l204.442 204.61c13.785 13.805 13.785 36.239 0 50.044-13.793 13.796-36.208 13.796-50.002 0a5994246.277 5994246.277 0 0 0-229.332-229.454 35.065 35.065 0 0 1-10.326-25.126c0-9.2 3.393-18.26 10.326-25.2C172.192 194.973 332.731 34.31 355.66 11.354Z"></path>-->
+        <!--                                </svg>-->
+        <!--                            </button>-->
+
+        <!--                            <button class="embla__button embla__button&#45;&#45;next" type="button">-->
+        <!--                                <svg class="embla__button__svg" viewBox="0 0 532 532">-->
+        <!--                                    <path fill="currentColor" d="M176.34 520.646c-13.793 13.805-36.208 13.805-50.001 0-13.785-13.804-13.785-36.238 0-50.034L330.78 266 126.34 61.391c-13.785-13.805-13.785-36.239 0-50.044 13.793-13.796 36.208-13.796 50.002 0 22.928 22.947 206.395 206.507 229.332 229.454a35.065 35.065 0 0 1 10.326 25.126c0 9.2-3.393 18.26-10.326 25.2-45.865 45.901-206.404 206.564-229.332 229.52Z"></path>-->
+        <!--                                </svg>-->
+        <!--                            </button>-->
+        <!--                        </div>-->
+
+        <!--                        <div class="embla__dots"></div>-->
+        <!--                    </div>-->
+        <!--                </section>-->
+
+        <!--                <section class="icon-btn-section">-->
+        <!--                    <button type="button">-->
+        <!--                        <i class="bi bi-heart"></i>-->
+        <!--                    </button>-->
+        <!--                    <button type="button">-->
+        <!--                        <i class="bi bi-chat"></i>-->
+        <!--                    </button>-->
+        <!--                    <button type="button">-->
+        <!--                        <i class="bi bi-send"></i>-->
+        <!--                    </button>-->
+        <!--                </section>-->
+
+        <!--                <div class="like">-->
+        <!--                    <span>좋아요</span>-->
+        <!--                    <button type="button" class="like-count">920개</button>-->
+        <!--                </div>-->
+
+        <!--                <div class="post-content">-->
+        <!--                    <div class="content-container">-->
+        <!--                        <a href="#" class="user-name">asmi_creator</a>-->
+        <!--                        <span class="content">-->
+        <!--                            雲みたいな綿菓子キャンディー🍭<br>-->
+        <!--                            <br>-->
+        <!--                            oﾟo｡oﾟo｡oﾟo｡oﾟo｡oﾟoﾟo｡oﾟo｡oﾟo ﾟo｡oﾟo｡oﾟoﾟo｡ <br><br>-->
+        <!--                            🎉LINEスタンプ発売中🎉<br>-->
+        <!--                            ホームのリンクからご購入いただけます✨<br>-->
+        <!--                            いいね、保存、フォローありがとうございます♪<br>-->
+        <!--                            お気に入りの作品があったら、シェアしてもらえると嬉しいです(๑･̑◡･̑๑)<br>-->
+        <!--                            <br>-->
+        <!--                            Thank you for liking, saving, and following me♪<br>-->
+        <!--                            If you have a favorite work, I would be happy if you could share it (๑・̑◡・̑๑)<br>-->
+        <!--                            <br>-->
+        <!--                            oﾟo｡oﾟo｡oﾟo｡oﾟo｡oﾟoﾟo｡oﾟo｡oﾟo ﾟo｡oﾟo｡oﾟoﾟo｡oﾟ-->
+        <!--                        </span>-->
+        <!--                    </div>-->
+        <!--                    <button type="button" class="post-more">더보기</button>-->
+        <!--                </div>-->
+
+        <!--                <div class="comment-container">-->
+        <!--                    <button type="button">댓글 16개 모두 보기</button>-->
+        <!--                    <label>-->
+        <!--                        <input type="text" active placeholder="댓글 달기...">-->
+        <!--                        <button type="button">게시</button>-->
+        <!--                    </label>-->
+        <!--                </div>-->
+        <!--            </article>-->
+    </section>
+</main>
+</body>
+</html>
+
+
+
+
+
+
+
+

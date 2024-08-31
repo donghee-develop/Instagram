@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main-layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}">
+    <title>채팅</title>
+    <link rel="stylesheet" href="../../static/css/main/chat.css">
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="../../static/js/main/chat.js" defer></script>
+</head>
+<body>
+<main id="main" layout:fragment="main">
+    <div id="chat-write-container">
+        <section class="chat-write">
+            <div class="chat-write-header-container">
+                <div class="chat-write-header">
+                    <h3>새로운 메시지</h3>
+                    <button type="button" class="chat-write-close-btn">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+                <label class="user-search">
+                    <span>받는 사람:</span>
+                    <input id="user-search-input" type="text" placeholder="검색..." active>
+                    <button type="button" >
+                        <span>Ai Artist 공식 인스타그램</span>
+                        <i class="bi bi-x"></i>
+                    </button>
+                </label>
+            </div>
+
+            <div class="chat-write-main">
+
+                <ul class="user-list-container" active>
+                    <li>
+                        <div class="user-profile-img-container">
+                            <img src="../../static/images/2.jpg" alt="#"/>
+                        </div>
+                        <div class="user-profile-info-container">
+                            <span class="user-nickname">Ai Artist 공식 인스타그램</span>
+                            <span class="user-name">sushi_musume_jk</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <section class="chat-write-message" >
+                    <label><textarea></textarea></label>
+                    <button type="button">채팅</button>
+                </section>
+            </div>
+        </section>
+    </div>
+
+    <aside id="chat-aside">
+        <div class="chat-aside-header">
+            <h2 th:text="${#authentication.principal.nickname}">Coding_Fox</h2>
+            <button id="chat-write-btn" type="button">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+        </div>
+        <h4>메시지</h4>
+        <ul class="message-list-container">
+            <li th:id="${room.id}" th:each="room: ${chatRooms}" th:onclick="@{|location.href='/chat/${room.id}'|}">
+                <div class="user-profile-img-container">
+                    <img th:src="@{|/image/${room.otherUser.email}|}" src="../../static/images/2.jpg" alt="#"/>
+                </div>
+                <div class="user-profile-info-container">
+                    <div class="user-nickname" th:text="${room.otherUser.nickname}">Ai Artist 공식 인스타그램</div>
+                    <div class="message-container">
+                        <span class="message" th:text="${room.messages[0].message}">ㅋㅋㅋ 내년엔 일본 놀러가봐야지 언제가냐 진짜 시간도 없는데 ㅠㅠ</span>
+                        <span class="dot">·</span>
+                        <span class="message-time">16시간</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </aside>
+
+    <section class="chat-main-container">
+        <div th:if="${chatRoom == null}" class="no-content" active>
+            <span>아직 채팅 내역이 없는 것 같아요😐</span>
+        </div>
+
+        <div th:if="${chatRoom != null}" class="chat-main">
+            <section class="chat-container">
+                <div class="other message" th:class="${sender == me ? 'me message ' + sender : 'other message ' + sender}"
+                     th:each="chatGroup,stat: ${chatRoom}"
+                     th:with="sender=${chatGroup.get(0).sender.email},me=${#authentication.principal.email}"
+                >
+                    <div class="user-profile-img-container" th:if="${sender != me}">
+                        <img src="#" th:src="@{|/image/${sender}|}" alt="#"/>
+                    </div>
+                    <div class="message-container">
+                        <span th:each="chatMessage: ${chatGroup}" th:text="${chatMessage.message}">컵라면</span>
+                    </div>
+                </div>
+
+                <!--                    <div class="time-line">9999. 9. 9. 오후 9:99</div>-->
+                <!--                    <div class="other message">-->
+                <!--                        <div class="user-profile-img-container">-->
+                <!--                            <img src="../../static/images/2.jpg" alt="#"/>-->
+                <!--                        </div>-->
+                <!--                        <div class="message-container">-->
+                <!--                            <span>컵라면</span>-->
+                <!--                            <span>맛있겠다</span>-->
+                <!--                            <span>ㅎㅎㅎㅎㅎㅎ</span>-->
+                <!--                            <span>배고프다</span>-->
+                <!--                            <article>-->
+                <!--                                <div class="publisher-top">-->
+                <!--                                    <div class="user-profile-img-container">-->
+                <!--                                        <img src="../../static/images/2.jpg" alt="#"/>-->
+                <!--                                    </div>-->
+                <!--                                    <span class="user-name">sushi_musume_jk</span>-->
+                <!--                                </div>-->
+                <!--                                <a href="#" class="content-img">-->
+                <!--                                    <img src="../../static/images/정복자.jpg" alt=""/>-->
+                <!--                                </a>-->
+                <!--                                <a href="#" class="content">-->
+                <!--                                    탑에서 만나면 위험한 교장선생님 1위 #롤 #리그오브레전드 #룬 #leagueoflegends #밈-->
+                <!--                                </a>-->
+                <!--                            </article>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+
+                <!--                    <div class="me message">-->
+                <!--                        <div class="message-container">-->
+                <!--                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis dicta dolorem eos expedita incidunt iste, similique. Eaque enim error in incidunt possimus quidem voluptas. Exercitationem id iure modi provident ut.</span>-->
+                <!--                            <span>ㅎㅎㅎㅎㅎㅎ</span>-->
+                <!--                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab atque autem dolor ipsum nesciunt quisquam, reiciendis sed? Aliquid, cum cupiditate et ex excepturi expedita in quidem. Ea iste nostrum quasi!</span>-->
+                <!--                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium atque consequuntur cum, dolor eaque error, esse est exercitationem harum ipsam nihil nisi, officiis sit veniam voluptatem! Eos quae quaerat quo!</span>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+
+                <!--                    <div class="time-line">9999. 9. 9. 오후 9:99</div>-->
+
+                <!--                    <div class="me message">-->
+                <!--                        <div class="message-container">-->
+                <!--                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis dicta dolorem eos expedita incidunt iste, similique. Eaque enim error in incidunt possimus quidem voluptas. Exercitationem id iure modi provident ut.</span>-->
+                <!--                            <span><img src="../../static/images/post/p7.jpg" alt=""/></span>-->
+                <!--                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab atque autem dolor ipsum nesciunt quisquam, reiciendis sed? Aliquid, cum cupiditate et ex excepturi expedita in quidem. Ea iste nostrum quasi!</span>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+
+                <!--                    <div class="other message">-->
+                <!--                        <div class="user-profile-img-container">-->
+                <!--                            <img src="../../static/images/2.jpg" alt="#"/>-->
+                <!--                        </div>-->
+                <!--                        <div class="message-container">-->
+                <!--                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis dicta dolorem eos expedita incidunt iste, similique. Eaque enim error in incidunt possimus quidem voluptas. Exercitationem id iure modi provident ut.</span>-->
+                <!--                            <span><img src="../../static/images/post/p5.webp" alt=""/></span>-->
+                <!--                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab atque autem dolor ipsum nesciunt quisquam, reiciendis sed? Aliquid, cum cupiditate et ex excepturi expedita in quidem. Ea iste nostrum quasi!</span>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+            </section>
+
+            <section class="chat-input-container">
+                <label class="chat-text-input">
+                    <input id="chat-text-input" type="text" placeholder="메시지 입력...">
+                </label>
+                <label class="chat-file-input">
+                    <input type="file">
+                    <i class="bi bi-image"></i>
+                </label>
+            </section>
+        </div>
+    </section>
+</main>
+</body>
+</html>
+
+
+
+
+
+

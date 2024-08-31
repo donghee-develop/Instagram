@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>INSTAR | SIGNUP</title>
+    <link rel="stylesheet" href="../../static/css/public/public.css">
+    <link rel="stylesheet" href="../../static/css/user/signup.css">
+    <script src="../../static/js/user/signup.js" defer></script>
+</head>
+<body>
+<main>
+    <section class="login-section">
+        <img src="../../static/images/logo/Instagram.png" alt="insta-logo">
+        <h2>KOREA IT의 사진과 동영상을 보려면 <br> 가입하세요</h2>
+        <form id="login-form" th:action="@{/user/signup}" method="post">
+            <label>
+                <input id="email-input" type="email" name="email" placeholder="이메일">
+            </label>
+            <div id="email-duplicate-message" class="duplicate-message">이메일이 중복입니다.</div>
+            <label>
+                <input id="email-auth-input" type="text" name="email-auth" placeholder="인증번호 입력">
+            </label>
+            <label>
+                <input id="email-auth-btn" type="button" value="인증번호전송">
+            </label>
+            <label>
+                <input type="text" name="name" placeholder="이름">
+            </label>
+            <label>
+                <input id="nickname-input" type="text" name="nickname" placeholder="사용자 닉네임">
+            </label>
+            <div id="nickname-duplicate-message" class="duplicate-message">닉네임이 중복입니다.</div>
+            <label>
+                <input type="password" name="password" placeholder="비밀번호">
+            </label>
+
+            <button type="submit">회원가입</button>
+        </form>
+
+    </section>
+    <section class="no-account-section">
+        <span>계정이 있으신가요?</span>
+        <a href="#">로그인</a>
+    </section>
+</main>
+</body>
+</html>
