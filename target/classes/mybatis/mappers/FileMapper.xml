@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.instagram.mapper.FileMapper">
+    <select id="selectFileByUuid" resultType="FileDTO">
+        SELECT * FROM `post_contents`
+        WHERE uuid = #{uuid}
+    </select>
+    <select id="selectFileByUserEmail" resultType="FileDTO">
+        SELECT image AS data FROM user WHERE email = #{userEmail}
+    </select>
+
+</mapper>
+
+
+
+
+

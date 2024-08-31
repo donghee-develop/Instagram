@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
+    <meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}">
+    <link rel="stylesheet" href="../../static/css/public/public.css">
+    <link rel="stylesheet" href="../../static/css/public/aside.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../static/js/main/aside.js" defer></script>
+<!--    채팅 모든 페이지에 적용하기-->
+    <script th:inline="javascript">
+        const followUsers = [[${#authentication.principal.followings}]]
+        const client = new StompJs.Client();
+
+        client.brokerURL = 'ws://localhost:8080/chatting';
+        client.onConnect = function (frame) {
+            console.log('서버와 연결이 완료되었습니다');
+            for(followUser of followUsers) {
+                client.subscribe(`/topic/user/${followUser}`, response => {
+                    const message = JSON.parse(response.body);
+                    if(message.type === 'POST'){
+                        create_alarm_message(message);
+                    }
+                    else if(message.type === 'Like'){
+                        create_alarm_message(message);
+                        // 위에꺼 함수 자체를 create_post_alarm 으로 바꾸고 얘를 create_like_alarm 으로 만들어야 함
+                    }
+
+                });
+            }
+        }
+        client.activate();
+    </script>
+</head>
+<body>
+<aside th:replace="~{main/aside :: aside}"></aside>
+<main layout:fragment="main"></main>
+</body>
+</html>

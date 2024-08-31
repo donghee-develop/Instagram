@@ -1,0 +1,84 @@
+@import "main-public.css";
+@import "../public/public.css";
+@import "../public/aside.css";
+
+#main-section{
+    padding: 50px 0;
+    width: 1000px;
+    min-width: 500px;
+    margin: 0 auto;
+}
+/*******************************************/
+.post-container > ol{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; /* Optional: To add some space between items */
+}
+
+.post-container > ol > li{
+    background-color: lightblue; /* Just for visualization */
+    position: relative;
+    cursor: pointer;
+}
+
+
+.post-container > ol > li::before {
+    content: "";
+    display: block;
+    padding-top: 100%; /* This creates a square aspect ratio */
+}
+
+.post-container > ol > li > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.post-container > ol > li > button{
+    border: none;
+    background-color: unset;
+    overflow: hidden;
+}
+.post-container > ol > li > button > span{
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 4px 4px 10px black;
+}
+.post-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-container > ol > li > div{
+    display: none;
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+}
+
+.post-container > ol > li:hover > div{
+    display: flex;
+}
+.post-container > ol > li i{
+
+}
+.post-container > ol > li span{
+    /*display: inline-block;*/
+    margin-right: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+    #main-section{
+        width: 80%;
+    }
+}

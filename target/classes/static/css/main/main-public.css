@@ -1,0 +1,13 @@
+*{
+    --aside-padding: 0 15px;
+    --aside-width: 10%;
+    --main-color: white;
+    --bg-color: black;
+}
+
+
+
+
+#main-section{
+    /*padding: 20px calc(var(--aside-width) + 50px);*/
+}

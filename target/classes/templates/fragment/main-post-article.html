@@ -1,0 +1,96 @@
+<article th:each="post: ${posts}" th:id="${post.no}">
+    <header>
+        <a th:href="@{|/user/mypage/${post.user.email}|}" href="#" class="user-profile-img-container">
+            <img th:src="@{|/image/${post.user.email}|}" src="https://i.namu.wiki/i/l0x04r27DjSQmS-WgYk6I5x6IkKMyvZjRMyK5dI3EMoMikzCd2Kfl2SMRdvL3-y4zpxI_qLP-fs3QToSR7AU3g.webp" alt="#">
+        </a>
+        <span class="user-profile-nickname" th:text="${post.user.nickname}">aniplex_jp</span>
+        <span class="write-time" th:text="${post.diffTime}">2주</span>
+        <button type="button" class="more-menu">
+            <i class="bi bi-three-dots"></i>
+        </button>
+    </header>
+
+    <section class="embla">
+        <div class="embla__viewport">
+            <div class="embla__container">
+                <div class="embla__slide" th:each="contents: ${post.contents}">
+                    <video th:if="${contents.mimeType == 'video'}" th:src="@{|/contents/${contents.uuid}|}" muted autoplay></video>
+                    <img th:if="${contents.mimeType == 'image'}" th:src="@{|/contents/${contents.uuid}|}" alt="img">
+                </div>
+            </div>
+        </div>
+
+        <div class="embla__controls">
+            <div class="embla__buttons">
+                <button class="embla__button embla__button--prev" type="button">
+                    <svg class="embla__button__svg" viewBox="0 0 532 532">
+                        <path fill="currentColor" d="M355.66 11.354c13.793-13.805 36.208-13.805 50.001 0 13.785 13.804 13.785 36.238 0 50.034L201.22 266l204.442 204.61c13.785 13.805 13.785 36.239 0 50.044-13.793 13.796-36.208 13.796-50.002 0a5994246.277 5994246.277 0 0 0-229.332-229.454 35.065 35.065 0 0 1-10.326-25.126c0-9.2 3.393-18.26 10.326-25.2C172.192 194.973 332.731 34.31 355.66 11.354Z"></path>
+                    </svg>
+                </button>
+
+                <button class="embla__button embla__button--next" type="button">
+                    <svg class="embla__button__svg" viewBox="0 0 532 532">
+                        <path fill="currentColor" d="M176.34 520.646c-13.793 13.805-36.208 13.805-50.001 0-13.785-13.804-13.785-36.238 0-50.034L330.78 266 126.34 61.391c-13.785-13.805-13.785-36.239 0-50.044 13.793-13.796 36.208-13.796 50.002 0 22.928 22.947 206.395 206.507 229.332 229.454a35.065 35.065 0 0 1 10.326 25.126c0 9.2-3.393 18.26-10.326 25.2-45.865 45.901-206.404 206.564-229.332 229.52Z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="embla__dots"></div>
+        </div>
+    </section>
+
+    <section class="icon-btn-section">
+        <button type="button"
+                th:if="${post.isPostLike}"
+                th:onclick="@{|like_cancel_post(${post.no}, this)|}"
+        >
+            <i class="bi bi-heart-fill"></i>
+        </button>
+        <button type="button"
+                th:if="${!post.isPostLike}"
+                th:onclick="@{|like_post(${post.no}, this)|}"
+        >
+            <i class="bi bi-heart"></i>
+        </button>
+        <button type="button">
+            <i class="bi bi-chat"></i>
+        </button>
+        <button type="button">
+            <i class="bi bi-send"></i>
+        </button>
+    </section>
+
+    <div class="like">
+        <span>좋아요</span>
+        <button type="button" class="like-count" th:text="|${post.likeCount}개|">920개</button>
+    </div>
+
+    <div class="post-content">
+        <div class="content-container">
+            <a th:href="@{|/user/mypage/${post.user.email}|}" href="#" class="user-name" th:text="${post.user.nickname}">asmi_creator</a>
+            <span class="content" th:text="${post.text}">
+                            雲みたいな綿菓子キャンディー🍭<br>
+                            <br>
+                            oﾟo｡oﾟo｡oﾟo｡oﾟo｡oﾟoﾟo｡oﾟo｡oﾟo ﾟo｡oﾟo｡oﾟoﾟo｡ <br><br>
+                            🎉LINEスタンプ発売中🎉<br>
+                            ホームのリンクからご購入いただけます✨<br>
+                            いいね、保存、フォローありがとうございます♪<br>
+                            お気に入りの作品があったら、シェアしてもらえると嬉しいです(๑･̑◡･̑๑)<br>
+                            <br>
+                            Thank you for liking, saving, and following me♪<br>
+                            If you have a favorite work, I would be happy if you could share it (๑・̑◡・̑๑)<br>
+                            <br>
+                            oﾟo｡oﾟo｡oﾟo｡oﾟo｡oﾟoﾟo｡oﾟo｡oﾟo ﾟo｡oﾟo｡oﾟoﾟo｡oﾟ
+                        </span>
+        </div>
+        <button type="button" class="post-more">더보기</button>
+    </div>
+
+    <div class="comment-container">
+        <button type="button" th:onclick="|show_post(${post.no})|">댓글 16개 모두 보기</button>
+        <label>
+            <input type="text" active placeholder="댓글 달기...">
+            <button type="button">게시</button>
+        </label>
+    </div>
+</article>

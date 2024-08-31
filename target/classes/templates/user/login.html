@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>INSTAR | LOGIN</title>
+    <link rel="stylesheet" href="../../static/css/user/login.css">
+    <link rel="stylesheet" href="../../static/css/public/public.css">
+</head>
+<body>
+
+
+    <main>
+        <section class="login-section">
+            <img src="../../static/images/logo/Instagram.png" alt="insta-logo">
+            <form id="login-form" th:action="@{/user/login}" method="post">
+                <label>
+                    <input type="text" name="email" placeholder="이메일">
+                </label>
+                <label>
+                    <input type="password" name="password" placeholder="비밀번호">
+                </label>
+
+                <button type="submit">로그인</button>
+            </form>
+
+            <div class="login-span-container">
+                <span></span>
+                <span>또는</span>
+                <span></span>
+            </div>
+
+            <button id="login-btn">
+                <img src="../../static/images/login/google/neutral/web_neutral_sq_SI@2x.png"/>
+            </button>
+            <a href="#">비밀번호를 잊으셨나요?</a>
+        </section>
+        <section class="no-account-section">
+            <span>계정이 없으신가요?</span>
+            <a href="/user/signup">가입하기</a>
+        </section>
+    </main>
+</body>
+</html>

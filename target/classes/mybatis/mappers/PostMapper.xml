@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.instagram.mapper.PostMapper">
+    <resultMap id="getPostsWithContentsMap" type="PostDTO" autoMapping="true">
+        <id property="no" column="no" />
+        <association property="user" resultMap="com.instagram.mapper.UserMapper.getUserWithImageMap" />
+        <collection property="contents" ofType="FileDTO" javaType="list" autoMapping="true">
+            <id property="uuid" column="uuid" />
+        </collection>
+    </resultMap>
+
+    <select id="selectPostByPostNo" resultType="PostDTO" resultMap="getPostsWithContentsMap">
+        SELECT
+            *,
+            POST_LIKE.post_no IS NOT NULL AS is_post_like
+        FROM `post` POST
+                 INNER JOIN post_contents POST_CONTENTS
+                            ON POST.no = POST_CONTENTS.post_no
+                 INNER JOIN `user` `USER`
+                            ON USER.email = POST.user_email
+                 LEFT OUTER JOIN `post_like` POST_LIKE
+                                 ON POST_LIKE.post_no = POST.no AND POST_LIKE.user_email = #{loginUserEmail}
+        WHERE POST.no = #{postNo}
+    </select>
+
+    <select id="selectPosts" resultType="PostDTO" resultMap="getPostsWithContentsMap">
+        SELECT
+        *,
+        POST_LIKE.post_no IS NOT NULL AS is_post_like
+        FROM post POST
+        INNER JOIN (
+        SELECT `no` FROM `post`
+        WHERE `no` <![CDATA[<]]> #{lastPostNo}
+        <if test="userEmail != null">
+            AND user_email = #{userEmail}
+        </if>
+        ORDER BY `no` DESC LIMIT #{count}
+        ) AS SUB_P ON POST.`no` = SUB_P.`no`
+        INNER JOIN `user` USER
+        ON USER.email = POST.user_email
+        INNER JOIN `post_contents` POST_CTS
+        ON POST.`no` = POST_CTS.`post_no`
+        LEFT OUTER JOIN `post_like` POST_LIKE
+        ON POST_LIKE.post_no = POST.no AND POST_LIKE.user_email = #{loginUserEmail}
+        ORDER BY POST.`no` DESC
+    </select>
+
+
+    <insert id="insertPost">
+        INSERT INTO `post` (no, user_email, text) VALUES
+            (NULL, #{user.email}, #{text})
+    </insert>
+
+    <insert id="insertPostContents">
+        <selectKey keyProperty="no" resultType="int" order="BEFORE">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `post_contents` (uuid, `order`, post_no, data, mime_type, extension) VALUES
+        <foreach collection="contents" item="postContents" separator=",">
+            (#{postContents.uuid}, #{postContents.order}, #{no} ,#{postContents.data}, #{postContents.mimeType}, #{postContents.extension})
+        </foreach>
+    </insert>
+
+    <select id="selectPostAlarmsByUser" resultType="PostDTO" resultMap="getPostsWithContentsMap">
+        SELECT *
+        FROM user_alarm U_ALARM
+                 INNER JOIN post POST
+                            ON U_ALARM.post_no = POST.no
+                 INNER JOIN `user` `USER`
+                            ON POST.user_email = `USER`.email
+        WHERE U_ALARM.user_email = #{userEmail}
+        ORDER BY `U_ALARM`.no
+    </select>
+
+    <insert id="insertAlarmOfUser">
+        INSERT INTO `user_alarm` (no, user_email, post_no, type)
+        VALUES
+        <foreach collection="user.followers" item="follower" separator=",">
+            (NULL, #{follower}, #{no}, #{type})
+        </foreach>
+    </insert>
+
+
+    <!--    ================================= -->
+    <!--    <select id="selectPostLikeByUser">-->
+    <!--        SELECT * FROM post_like-->
+    <!--        WHERE post_no = #{postNo} AND user_email = #{userEmail}-->
+    <!--    </select>-->
+
+    <insert id="insertPostLikeOfUser">
+        INSERT INTO `post_like` VALUES (#{userEmail}, #{postNo})
+    </insert>
+
+    <delete id="deletePostLikeOfUser">
+        DELETE FROM `post_like`
+        WHERE post_no = #{postNo} AND user_email = #{userEmail}
+    </delete>
+
+
+
+
+
+</mapper>
+
+
+
+
+

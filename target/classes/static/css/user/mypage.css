@@ -1,0 +1,193 @@
+@import "../public/public.css";
+@import "../public/aside.css";
+
+
+#main{
+    /*width: 50rem;*/
+    flex: 0 0 50em;
+    margin: 0 auto;
+}
+#main > header{
+    padding: 0 20px 50px 20px;
+}
+
+.user-info-container{
+    display: flex;
+    margin: 30px 0;
+}
+
+.user-info-container > div:first-child{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 100px;
+}
+
+.user-profile-img-container{
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: unset;
+    cursor: pointer;
+}
+
+.user-profile-img-container > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.user-name-section > span{
+    font-family: Bold;
+    font-size: var(--font-size-medium);
+}
+.user-name-section > button{
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: unset;
+    color: white;
+    background-color: var(--color-Big-Machine-5);
+    cursor: pointer;
+    margin: 0 2px;
+}
+.user-name-section > button:hover{
+    opacity: 0.8;
+}
+.user-info-section{
+    margin: 30px 0;
+}
+.user-info-section > .info{
+    display: inline-block;
+    margin-right: 30px;
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+    color: inherit;
+}
+.user-info-section > .info:hover{
+    opacity: 0.8;
+}
+.user-info-section > .info > b{
+    font-family: Bold;
+    color: inherit;
+}
+
+.user-shorts-container li{
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.user-shorts-container button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 5px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--color-Light-Grays-1-rgba);
+    cursor: pointer;
+}
+.user-shorts-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.user-shorts-container i{
+    font-family: Black;
+    font-size: var(--font-size-black);
+}
+/************************************************/
+main > nav > ul{
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid var(--color-Light-Grays-1-rgba);
+}
+main > nav > ul > li{
+    height: 50px;
+    margin: 0 15px;
+}
+main > nav > ul > li > button{
+    display: block;
+    height: 100%;
+    border: none;
+    color: var(--main-color);
+    background-color: unset;
+    cursor: pointer;
+    border-top: 2px solid black;
+}
+main > nav > ul > li > button > i{
+    font-size: var(--font-size-extralight);
+}
+main > nav > ul > li > button > span{
+    font-size: var(--font-size-extralight);
+}
+
+/*******************************************/
+.post-container > ol{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* Optional: To add some space between items */
+}
+
+.post-container > ol > li{
+    background-color: lightblue; /* Just for visualization */
+    position: relative;
+    cursor: pointer;
+}
+
+
+.post-container > ol > li::before {
+    content: "";
+    display: block;
+    padding-top: 100%; /* This creates a square aspect ratio */
+}
+
+.post-container > ol > li > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.post-container > ol > li > button{
+    border: none;
+    background-color: unset;
+    overflow: hidden;
+}
+.post-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-container > ol > li > div{
+    display: none;
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+}
+
+.post-container > ol > li:hover > div{
+    display: flex;
+}
+.post-container > ol > li i{
+
+}
+.post-container > ol > li span{
+    /*display: inline-block;*/
+    margin-right: 20px;
+}
+
+
+
+
+
+
+
