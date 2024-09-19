@@ -20,14 +20,15 @@ import java.util.List;
 @Log4j2
 @Controller
 public class MainController {
-    @Autowired private SimpMessagingTemplate simpMessagingTemplate;
     @Autowired private PostService postService;
 
+    // main GET MAPPING
     @GetMapping("/")
     public String get_main() {
         return "main/main";
     }
 
+    // posts GET MAPPING
     @GetMapping("/posts")
     public String get_posts(
             @AuthenticationPrincipal UserDTO user,

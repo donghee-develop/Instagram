@@ -28,11 +28,13 @@ public class ChatController {
     @Autowired private SimpMessagingTemplate simpMessagingTemplate;
     @Autowired private ChatService chatService;
 
+    // Chat GET MAPPING
     @GetMapping("/chat")
     public String get_chat(
             @AuthenticationPrincipal UserDTO user,
             Model model
     ){
+        //
         List<ChatRoomDTO> chatRooms = chatService.get_chat_rooms(user.getEmail());
         model.addAttribute("chatRooms", chatRooms);
         return "main/chat";
